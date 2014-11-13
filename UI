@@ -11,8 +11,8 @@ shinyUI(fluidPage(
   # Application logo and title
   br(),
   fluidRow(
-    column(1,img(src = "logo.png", height = 70, width = 70)),
-    column(11,h1("Google Ranker App", style = "font-family: 'Helvetica Neue', cursive;
+    
+    column(12,h1("Google Ranker App", style = "font-family: 'Helvetica Neue', cursive;
         font-weight: 500; line-height: 1.1; 
         color: #55ACEE;"))),
   br(),
