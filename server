@@ -1,0 +1,22 @@
+
+#libraries loading
+library(shiny)
+library("RCurl")
+library("XML")
+#Serp_scanner() function loading
+load("serp_toolkit.Rdata")
+shinyServer(function(input, output) {
+website = reactive({input$selected_website})
+#output crafting
+output$rank_1 = renderText({
+  input$goButton
+ isolate({
+ result= serp_scanner(input$selected_keyword_1,website())
+ if (website()==""|input$selected_keyword_1==""){""}
+ else{if (min(result)==200){"google is thinking we are robots (error 302)! please try later"}
+   else if(min(result) ==100){"the selected website doesn't appear within the first 5 SERP pages"}
+   else{ paste("the website appears on SERP page n",min(result),"for the given keyword", sep=" ")}
+ }
+ })
+  })
+})
