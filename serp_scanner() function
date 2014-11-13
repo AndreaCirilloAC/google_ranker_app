@@ -1,0 +1,35 @@
+# load libraries
+library("RCurl")
+library("XML")
+#google_ranker
+#1. define the searched web site
+selected_website = "andrea"
+#2. define the keyword
+keyword = "evernote equation"
+
+#3. grab data from SERP, page 1 to 5
+serp_scanner = function(keyword,website){
+  scan_result = rep(0,5) #initialize the scan_result vector
+  for (i in seq(from=0,to=40,by=10)){
+
+    #grab the SERP page
+    web_page = getForm("http://www.google.com/search", hl="en", lr="", 
+                                ie="ISO-8859-1",  q=gsub(" ","+",keyword), btnG="Search",start=i)
+    #make it readable
+    web_page = htmlTreeParse(web_page)
+    if (grepl("302 Moved",(web_page[3]))==TRUE){
+      scan_result[(i/10)+1] = 200}#error 302 handling
+    else if (sum((grep(website,web_page))>0)){
+    scan_result[(i/10)+1]=  (i/10)+1  #website found
+    rm(web_page) }
+    else
+      {
+        scan_result[(i/10)+1] = 100 #website not found
+                   rm(web_page)   
+     }
+  }
+return(scan_result)
+}
+
+#save function
+save(serp_scanner,file="serp_toolkit.Rdata")
