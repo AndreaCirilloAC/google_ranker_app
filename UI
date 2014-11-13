@@ -1,0 +1,59 @@
+
+library(shiny)
+
+shinyUI(fluidPage(
+#import font from Google Font
+  tags$head(
+    tags$style(HTML("
+      @import url('//fonts.googleapis.com/css?family=Lobster|Cabin:400,700');
+    "))
+  ),
+  # Application logo and title
+  br(),
+  fluidRow(
+    column(1,img(src = "logo.png", height = 70, width = 70)),
+    column(11,h1("Google Ranker App", style = "font-family: 'Helvetica Neue', cursive;
+        font-weight: 500; line-height: 1.1; 
+        color: #55ACEE;"))),
+  br(),
+  #instructions and blog link
+  fluidRow(
+  p("check the position of a given website on the Google Search engine."),
+  p("Put the website address and the keyword you are interested in.
+    the google ranker app will look within the first 5 Search Engine Results pages."),
+
+  tags$a(href="http://www.andreacirilloblog.wordpress.com", "find out more on: andreacirilloblog")),
+  br(),
+  hr(),
+  
+  #website input
+  fluidRow(
+    column(12,
+           textInput("selected_website",h3("1. write the website")))),
+  br(),
+
+  # keyword input
+  fluidRow(  
+    column(12,
+        textInput("selected_keyword_1",h3("2. write the keyword")))
+  ),
+  br(),
+  #action button
+  fluidRow(  
+    column(12,
+           h3("3. press the button"),
+           actionButton("goButton", "look up on Google!"))
+  ),
+  br(),
+  #result
+  fluidRow(  
+    column(12,
+           h3("4. enjoy the result"),
+           br(),
+           br(),
+           h4(textOutput("rank_1"), style = "font-family: 'Helvetica Neue', cursive;
+        font-weight: 500; line-height: 3.1; 
+        color: #55ACEE;"))
+  )
+  
+))
